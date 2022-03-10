@@ -21,6 +21,14 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+  <div class="field">
+    <%= f.label :role, "I am a shop owner" %><br />
+    <%= f.radio_button :role, true %><br />
+    <%= f.label :role, "I am only a user" %><br />
+    <%= f.radio_button :role, false %>
+  </div>
+
+
   <div class="actions">
     <%= f.submit "Sign up", data: {turbo: false} %>
   </div>

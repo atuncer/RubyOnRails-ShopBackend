@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Gems:
+1) Devise,
+2) Jetbrains RubyMine automatic gem additions that I don't know about
