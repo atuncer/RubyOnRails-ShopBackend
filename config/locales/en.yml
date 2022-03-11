@@ -30,4 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        shop:
+          attributes:
+            user_id:
+              # I couldn't find a way to remove %{attribute} for a specific error so it has "User" in the message beginning
+              taken: "you already have a shop"

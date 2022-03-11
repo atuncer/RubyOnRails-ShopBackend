@@ -5,10 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # I can't get this to work
-  # TODO: fix users creating multiple shops
+  # TODO: fix users creating multiple shops. Done
   # so apparently, has_one doesn't validate users having only one shop
   # it makes shop singular and limits the query to 1
-  # I migrated a new model that has user_id unique:true
+  # I added "validates :user_id, uniqueness: true" to the shop model
   has_one :shop, dependent: :destroy
 
   has_many :favorite_shops, dependent: :destroy

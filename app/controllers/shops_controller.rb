@@ -40,7 +40,7 @@ class ShopsController < ApplicationController
     #                                 by editing the network packets
 
     respond_to do |format|
-      if @shop.save and current_user
+      if @shop.save
         format.html { redirect_to shop_url(@shop), notice: "Shop was successfully created." }
         format.json { render :show, status: :created, location: @shop }
       else
