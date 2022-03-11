@@ -1,4 +1,7 @@
 class Shop < ApplicationRecord
+  validates :name, :bio, presence: true
+
+  # Relationships
   belongs_to :user
 
   has_many :favorite_shops

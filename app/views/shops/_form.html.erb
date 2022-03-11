@@ -1,0 +1,24 @@
+<%= form_with(model: shop) do |form| %>
+  <% if shop.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(shop.errors.count, "error") %> prohibited this shop from being saved:</h2>
+
+      <ul>
+        <% shop.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %>:
+    <%= form.text_field :name %>
+    <br />
+    <%= form.label :bio %>:
+    <%= form.text_field :bio %>
+    <br/>
+    <%= form.submit %>
+
+  </div>
+<% end %>
