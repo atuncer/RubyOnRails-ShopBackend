@@ -25,20 +25,19 @@ class ShopsController < ApplicationController
 
   # POST /shops or /shops.json
   def create
-    # WHY DOESN'T THIS WORK?
+    # WHY DOESN'T "@shop = Shop.new(shop_params)" WORK?
     # WHEN I MANUALLY TYPE {"name"=>"AAAAAA", "bio"=>"AAAA"} , IT WORKS :D
     # WHEN IT COMES INSIDE shop_params, IT DOESN'T WORK :DDDDDD
     # -- Update --
-    # so it seems it was passed as a "ActionController::Parameters" object, not as a hash on the newer rails versions
+    # so it seems it was passed as a "ActionController::Parameters" object, not as a hash, on the newer rails versions
     # ActionController::Parameters.permit_all_parameters = true
     # I think this is disabled by default for sql injection prevention
 
-    #permitted = shop_params.permit(:name, :bio)
     # Whenever I do a migration that edits columns, I guess have to add the new columns to these permitted params
     # so I don't think this is a scalable solution. However this is the suggested solution
     @shop = Shop.new(permitted_shop_params)
-    @shop.user_id = current_user.id  # by passing current_user.id here, it prevents the user from changing the user_id
-    #                                  by editing the network packets
+    @shop.user_id = current_user.id # by passing current_user.id here, it prevents the user from changing the user_id
+    #                                 by editing the network packets
 
     respond_to do |format|
       if @shop.save and current_user
