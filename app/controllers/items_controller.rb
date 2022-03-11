@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    if item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
+    if @item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
       redirect_to items_path, notice: 'You are not authorized to edit this item.'
     end
   end
@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
-    if item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
+    if @item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
       redirect_to items_path, notice: 'You are not authorized to edit this item.'
       return
     end
@@ -57,7 +57,7 @@ class ItemsController < ApplicationController
 
   # DELETE /items/1 or /items/1.json
   def destroy
-    if item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
+    if @item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
       redirect_to items_path, notice: 'You are not authorized to edit this item.'
       return
     end
