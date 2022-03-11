@@ -17,11 +17,15 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    if item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
+      redirect_to items_path, notice: 'You are not authorized to edit this item.'
+    end
   end
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    @item = Item.new(permitted_item_params)
+    @item.shop_id = current_user.shop.id
 
     respond_to do |format|
       if @item.save
@@ -36,8 +40,12 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    if item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
+      redirect_to items_path, notice: 'You are not authorized to edit this item.'
+      return
+    end
     respond_to do |format|
-      if @item.update(item_params)
+      if @item.update(permitted_item_params)
         format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
@@ -49,6 +57,10 @@ class ItemsController < ApplicationController
 
   # DELETE /items/1 or /items/1.json
   def destroy
+    if item.shop_id != current_user.shop.id  # TODO: I don't know about it yet
+      redirect_to items_path, notice: 'You are not authorized to edit this item.'
+      return
+    end
     @item.destroy
 
     respond_to do |format|
@@ -66,5 +78,9 @@ class ItemsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def item_params
       params.fetch(:item, {})
+    end
+
+    def permitted_item_params
+      params.require(:item).permit(:name, :stock, :description)
     end
 end

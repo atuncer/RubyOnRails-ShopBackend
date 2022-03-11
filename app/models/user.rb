@@ -4,12 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :shop
+  # I can't get this to work
+  # A user can still create multiple shops
+  has_one :shop, dependent: :destroy
 
-  has_many :favorite_shops
+  has_many :favorite_shops, dependent: :destroy
   has_many :shop_favorites, through: :favorite_shops, source: :shop
 
-  has_many :favorite_items
+  has_many :favorite_items, dependent: :destroy
   has_many :item_favorites, through: :favorite_items, source: :item
 
 end

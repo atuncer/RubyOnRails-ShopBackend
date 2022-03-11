@@ -3,7 +3,7 @@ class ShopsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   # GET /shops or /shops.json
   def index
-    @shops = Shop.where(user_id: current_user.id)
+    @shops = Shop.all
   end
 
   # GET /shops/1 or /shops/1.json
@@ -28,15 +28,17 @@ class ShopsController < ApplicationController
     # WHY DOESN'T THIS WORK?
     # WHEN I MANUALLY TYPE {"name"=>"AAAAAA", "bio"=>"AAAA"} , IT WORKS :D
     # WHEN IT COMES INSIDE shop_params, IT DOESN'T WORK :DDDDDD
-    # so it seems it was passed as a "ActionController::Parameters" object, not as a hash
+    # -- Update --
+    # so it seems it was passed as a "ActionController::Parameters" object, not as a hash on the newer rails versions
     # ActionController::Parameters.permit_all_parameters = true
     # I think this is disabled by default for sql injection prevention
 
-    permitted = shop_params.permit(:name, :bio)
+    #permitted = shop_params.permit(:name, :bio)
     # Whenever I do a migration that edits columns, I guess have to add the new columns to these permitted params
     # so I don't think this is a scalable solution. However this is the suggested solution
-    @shop = Shop.new(permitted)
-    @shop.user = current_user
+    @shop = Shop.new(permitted_shop_params)
+    @shop.user_id = current_user.id  # by passing current_user.id here, it prevents the user from changing the user_id
+    #                                  by editing the network packets
 
     respond_to do |format|
       if @shop.save and current_user
@@ -56,7 +58,7 @@ class ShopsController < ApplicationController
       return
     end
     respond_to do |format|
-      if @shop.update(shop_params)
+      if @shop.update(permitted_shop_params)
         format.html { redirect_to shop_url(@shop), notice: "Shop was successfully updated." }
         format.json { render :show, status: :ok, location: @shop }
       else
@@ -89,5 +91,10 @@ class ShopsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def shop_params
       params.fetch(:shop, {})
+    end
+
+    # Edit when new columns come in
+    def permitted_shop_params
+      params.fetch(:shop, {}).permit(:name, :bio)
     end
 end

@@ -12,6 +12,15 @@
   <% end %>
 
   <div>
+    <%= form.label :name %>:
+    <%= form.text_field :name %>
+    <br/>
+    <%= form.label :stock %>:
+    <%= form.number_field :stock %>
+    <br />
+    <%= form.label :description %>:
+    <%= form.text_field :description %>
+    <br/>
     <%= form.submit %>
   </div>
 <% end %>
