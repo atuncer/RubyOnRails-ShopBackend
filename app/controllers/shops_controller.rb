@@ -15,8 +15,10 @@ class ShopsController < ApplicationController
   def new
     if current_user.shop.present?
       redirect_to shops_path, alert: 'You already have a shop.'
-    else
+    elsif can_create_shop?
       @shop = Shop.new
+    else
+      redirect_to shops_path, alert: 'You do not have permission to create a shop.'
     end
   end
 
@@ -29,6 +31,10 @@ class ShopsController < ApplicationController
 
   # POST /shops or /shops.json
   def create
+    unless can_create_shop?
+      redirect_to shops_path, alert: 'You do not have permission to create a shop.'
+      return
+    end
     # WHY DOESN'T "@shop = Shop.new(shop_params)" WORK?
     # WHEN I MANUALLY TYPE {"name"=>"AAAAAA", "bio"=>"AAAA"} , IT WORKS :D
     # WHEN IT COMES INSIDE shop_params, IT DOESN'T WORK :DDDDDD
@@ -83,6 +89,10 @@ class ShopsController < ApplicationController
       format.html { redirect_to shops_url, notice: "Shop was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def can_create_shop?
+    current_user.role
   end
 
   private

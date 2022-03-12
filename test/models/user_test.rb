@@ -12,8 +12,6 @@ class UserTest < ActiveSupport::TestCase
     @user_with_shop = User.find(shop_owner_ids.first)
   end
 
-  # Devise is
-
   # test "the truth" do
   #   assert true
   # end
