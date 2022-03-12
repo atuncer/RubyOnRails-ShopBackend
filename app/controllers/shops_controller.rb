@@ -13,7 +13,11 @@ class ShopsController < ApplicationController
 
   # GET /shops/new
   def new
-    @shop = Shop.new
+    if current_user.shop.present?
+      redirect_to shops_path, alert: 'You already have a shop.'
+    else
+      @shop = Shop.new
+    end
   end
 
   # GET /shops/1/edit

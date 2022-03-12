@@ -20,7 +20,7 @@ class ShopsControllerTest < ActionDispatch::IntegrationTest
   test 'should NOT get new as SHOP OWNER' do
     sign_in @shop_owner
     get new_shop_url
-    assert_response :error
+    assert_redirected_to shops_url
   end
 
   test 'should NOT create shop as SHOP OWNER' do
@@ -72,7 +72,7 @@ class ShopsControllerTest < ActionDispatch::IntegrationTest
   test 'should NOT get new as OTHER SHOP OWNER' do
     sign_in @other_shop_owner
     get new_shop_url
-    assert_response :error
+    assert_redirected_to shops_url
   end
 
   test 'should NOT create shop as OTHER SHOP OWNER' do

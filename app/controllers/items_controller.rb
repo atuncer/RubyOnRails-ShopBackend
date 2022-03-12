@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: %i[ index show ]
 
   # GET /items or /items.json
   def index
@@ -68,6 +69,12 @@ class ItemsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  helper_method :can_user_edit_item
+  def can_user_edit_item(item_id)
+    current_user and current_user.shop and current_user.shop.id == item_id
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

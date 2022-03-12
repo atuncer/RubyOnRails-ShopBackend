@@ -3,8 +3,10 @@
 <%= render @item %>
 
 <div>
-  <%= link_to "Edit this item", edit_item_path(@item) %> |
+  <!-- Helper method from controller-->
+  <% if can_user_edit_item(@item.id) %>
+    <%= link_to "Edit this item", edit_shop_path(@item) %>
+    <%= button_to "Destroy this item", @item, method: :delete %>
+  <% end %>
   <%= link_to "Back to items", items_path %>
-
-  <%= button_to "Destroy this item", @item, method: :delete %>
 </div>
