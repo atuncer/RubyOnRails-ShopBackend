@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ShopTest < ActiveSupport::TestCase
-
   def setup
     # @user_with_no_shop = User.find(1)
     # @user_with_shop = User.find(3)
@@ -34,9 +33,9 @@ class ShopTest < ActiveSupport::TestCase
   end
 
   test 'shop created by another shop owner should not be valid' do
-    @shop = Shop.new(user_id: @user_with_no_shop.id, name: 'Test Shop', bio: 'Test Bio')
+    @shop = Shop.new(user_id: @user_with_shop.id, name: 'Test Shop', bio: 'Test Bio')
     assert_not @shop.valid?
-  end
+   end
 
   test 'shop with all required fields should be valid' do
     @shop = Shop.new(user_id: @user_with_no_shop.id, name: 'Test Shop', bio: 'Test Bio')
@@ -74,7 +73,4 @@ class ShopTest < ActiveSupport::TestCase
     @user_with_shop.destroy
     assert_not Shop.exists?(@shop.id)
   end
-
-
-
 end
