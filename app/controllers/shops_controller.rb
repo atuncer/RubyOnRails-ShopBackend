@@ -1,6 +1,8 @@
 class ShopsController < ApplicationController
-  before_action :set_shop, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: %i[ index show ]
+  before_action :set_shop, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :user_has_shop?, only: %i[new create]
+  before_action :user_is_owner?, only: %i[edit update destroy]
   # GET /shops or /shops.json
   def index
     @shops = Shop.all
@@ -13,28 +15,15 @@ class ShopsController < ApplicationController
 
   # GET /shops/new
   def new
-    if current_user.shop.present?
-      redirect_to shops_path, alert: 'You already have a shop.'
-    elsif can_create_shop?
-      @shop = Shop.new
-    else
-      redirect_to shops_path, alert: 'You do not have permission to create a shop.'
-    end
+    @shop = Shop.new
   end
 
   # GET /shops/1/edit
   def edit
-    if @shop.user_id != current_user.id
-      redirect_to shops_path, notice: 'You are not authorized to edit this shop.'
-    end
   end
 
   # POST /shops or /shops.json
   def create
-    unless can_create_shop?
-      redirect_to shops_path, alert: 'You do not have permission to create a shop.'
-      return
-    end
     # WHY DOESN'T "@shop = Shop.new(shop_params)" WORK?
     # WHEN I MANUALLY TYPE {"name"=>"AAAAAA", "bio"=>"AAAA"} , IT WORKS :D
     # WHEN IT COMES INSIDE shop_params, IT DOESN'T WORK :DDDDDD
@@ -62,10 +51,6 @@ class ShopsController < ApplicationController
 
   # PATCH/PUT /shops/1 or /shops/1.json
   def update
-    if @shop.user_id != current_user.id
-      redirect_to shops_path, notice: 'You are not authorized to update this shop.'
-      return
-    end
     respond_to do |format|
       if @shop.update(permitted_shop_params)
         format.html { redirect_to shop_url(@shop), notice: "Shop was successfully updated." }
@@ -79,10 +64,6 @@ class ShopsController < ApplicationController
 
   # DELETE /shops/1 or /shops/1.json
   def destroy
-    if @shop.user_id != current_user.id
-      redirect_to shops_path, notice: 'You are not authorized to edit this shop.'
-      return
-    end
     @shop.destroy
 
     respond_to do |format|
@@ -91,23 +72,45 @@ class ShopsController < ApplicationController
     end
   end
 
-  def can_create_shop?
+  def auth_to_create_shop?
     current_user.role
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_shop
-      @shop = Shop.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def shop_params
-      params.fetch(:shop, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_shop
+    @shop = Shop.find(params[:id])
+  end
 
-    # Edit when new columns come in
-    def permitted_shop_params
-      params.fetch(:shop, {}).permit(:name, :bio)
+  def user_has_shop?
+    if !auth_to_create_shop?
+      redirect_to shops_path, alert: 'You are plain user.'
+    elsif
+      current_user.shop.present?
+      redirect_to shops_path, alert: 'You already have a shop.'
+    else
+      true
     end
+    false
+  end
+
+  def user_is_owner?
+    if current_user.id != @shop.user_id
+      redirect_to shops_path, alert: 'You are not the owner of this shop.'
+    else
+      true
+    end
+    false
+  end
+
+  # Only allow a list of trusted parameters through.
+  def shop_params
+    params.fetch(:shop, {})
+  end
+
+  # Edit when new columns come in
+  def permitted_shop_params
+    params.fetch(:shop, {}).permit(:name, :bio)
+  end
 end

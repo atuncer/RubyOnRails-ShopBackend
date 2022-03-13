@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[index show]
-  before_action :check_has_shop, only: %i[new create]
-  before_action :check_is_owner, only: %i[edit update destroy]
+  before_action :user_has_shop?, only: %i[new create]
+  before_action :user_is_owner?, only: %i[edit update destroy]
   # GET /items or /items.json
   def index
     @items = Item.all
@@ -19,7 +19,6 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    redirect_to items_path, notice: 'You are not authorized to edit this item.'
   end
 
   # POST /items or /items.json
@@ -61,18 +60,18 @@ class ItemsController < ApplicationController
     end
   end
 
-  def has_auth_to_create_shop?
+  def auth_to_create_shop?
     current_user.role
   end
 
   def can_create_new_shop?
     # Has auth to create shop and has no shop
-    current_user.role and !current_user.shop.present?
+    current_user.role && !current_user.shop.present?
   end
 
   helper_method :can_user_edit_item
   def can_user_edit_item(item_id)
-    current_user and current_user.shop.present? and current_user.shop.id == item_id
+    current_user && current_user.shop.present? && current_user.shop.id == item_id
   end
 
 
@@ -83,24 +82,21 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def check_has_shop
-    if !has_auth_to_create_shop?
-      redirect_to root_path, notice: 'You are plain user.'
+  def user_has_shop?
+    if !auth_to_create_shop?
+      redirect_to root_path, alert: 'You are plain user.'
     elsif can_create_new_shop?
-      redirect_to new_shop_path, notice: 'You should create a shop first.'
+      redirect_to new_shop_path, alert: 'You should create a shop first.'
     else
       true
     end
     false
   end
 
-  def check_is_owner
-    if !has_auth_to_create_shop?
-      redirect_to root_path, notice: 'You are plain user.'
-    elsif can_create_new_shop?
-      redirect_to new_shop_path, notice: 'You should create a shop first.'
-    elsif !can_user_edit_item(@item.shop_id)
-      redirect_to items_path, notice: 'You are not authorized to edit this item.'
+  def user_is_owner?
+    # This is for avoiding redundancy. I guess this will work.
+    if user_has_shop? && !can_user_edit_item(@item.shop_id)
+      redirect_to items_path, alert: 'You are not authorized to edit this item.'
     else
       true
     end
