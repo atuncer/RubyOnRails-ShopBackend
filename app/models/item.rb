@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  validates :name, :stock, :description, presence: true
   belongs_to :shop
 
   has_many :favorite_items, dependent: :destroy
