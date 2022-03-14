@@ -71,7 +71,8 @@ class ItemsController < ApplicationController
 
   helper_method :can_user_edit_item
   def can_user_edit_item(item_id)
-    current_user && current_user.shop.present? && current_user.shop.id == item_id
+    current_user.present? && current_user.shop.present? && current_user.shop.id == item_id
+
   end
 
 
@@ -88,17 +89,16 @@ class ItemsController < ApplicationController
     elsif can_create_new_shop?
       redirect_to new_shop_path, alert: 'You should create a shop first.'
     else
-      true
+      return true
     end
     false
   end
 
   def user_is_owner?
-    # This is for avoiding redundancy. I guess this will work.
-    if user_has_shop? && !can_user_edit_item(@item.shop_id)
+    if !auth_to_create_shop? && can_create_new_shop? && user_has_shop? && !can_user_edit_item(@item.shop_id)
       redirect_to items_path, alert: 'You are not authorized to edit this item.'
     else
-      true
+      return true
     end
     false
   end

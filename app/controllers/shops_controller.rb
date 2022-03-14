@@ -90,7 +90,7 @@ class ShopsController < ApplicationController
       current_user.shop.present?
       redirect_to shops_path, alert: 'You already have a shop.'
     else
-      true
+      return true
     end
     false
   end
@@ -99,7 +99,7 @@ class ShopsController < ApplicationController
     if current_user.id != @shop.user_id
       redirect_to shops_path, alert: 'You are not the owner of this shop.'
     else
-      true
+      return true
     end
     false
   end
