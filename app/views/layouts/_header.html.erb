@@ -19,7 +19,15 @@
           <li class="nav-item">
             <%= link_to 'Favorite Items TODO', items_path, class: 'nav-link' %>
           </li>
-
+          <% if current_user.shop.present? %>
+            <li class="nav-item">
+              <%= link_to 'Create Item', new_item_path, class: 'nav-link' %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to 'Create Shop', new_shop_path, class: 'nav-link' %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>
