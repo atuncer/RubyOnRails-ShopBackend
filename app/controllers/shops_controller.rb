@@ -4,6 +4,26 @@ class ShopsController < ApplicationController
   before_action :user_has_shop?, only: %i[new create]
   before_action :user_is_owner?, only: %i[edit update destroy]
   # GET /shops or /shops.json
+
+  def favorite
+    type = params[:type]
+    id = params[:id]
+    @shop = Shop.find(id)
+    case type
+    when 'favorite'
+      current_user.shop_favorites << @shop
+
+    when 'unfavorite'
+      if current_user.shop_favorites.include?(@shop)
+        current_user.shop_favorites.delete(@shop)
+      end
+
+    else
+      # type code here
+    end
+  end
+
+
   def index
     @shops = Shop.all
   end
@@ -40,7 +60,7 @@ class ShopsController < ApplicationController
 
     respond_to do |format|
       if @shop.save
-        format.html { redirect_to shop_url(@shop), notice: "Shop was successfully created." }
+        format.html { redirect_to shop_url(@shop), notice: 'Shop was successfully created.' }
         format.json { render :show, status: :created, location: @shop }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -53,7 +73,7 @@ class ShopsController < ApplicationController
   def update
     respond_to do |format|
       if @shop.update(permitted_shop_params)
-        format.html { redirect_to shop_url(@shop), notice: "Shop was successfully updated." }
+        format.html { redirect_to shop_url(@shop), notice: 'Shop was successfully updated.' }
         format.json { render :show, status: :ok, location: @shop }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -67,7 +87,7 @@ class ShopsController < ApplicationController
     @shop.destroy
 
     respond_to do |format|
-      format.html { redirect_to shops_url, notice: "Shop was successfully destroyed." }
+      format.html { redirect_to shops_url, notice: 'Shop was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

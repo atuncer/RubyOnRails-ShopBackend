@@ -11,6 +11,7 @@
           <th scope="col">ID</th>
           <th scope="col">Name</th>
           <th scope="col">Biography</th>
+          <th scope="col">Add to Favorites</th>
           <th scope="col">Show</th>
         </tr>
       </thead>
@@ -18,6 +19,11 @@
       <% @shops.each do |shop| %>
       <tr>
         <%= render shop %>
+        <% if !current_user.reload.shop_favorites.include?(shop) %>
+          <td><%= link_to "favorite",   favorite_shop_path(shop, type: "favorite"), data: { "turbo-method": :put } %></td>
+        <% else %>
+          <td><%= link_to "unfavorite", favorite_shop_path(shop, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+        <% end %>
         <td><%= link_to 'Show', shop %></td></td>
       </tr>
       <% end %>

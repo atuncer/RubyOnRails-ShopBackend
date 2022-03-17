@@ -23,11 +23,18 @@
             <li class="nav-item">
               <%= link_to 'Create Item', new_item_path, class: 'nav-link' %>
             </li>
-          <% else %>
+          <% elsif current_user.role %>
             <li class="nav-item">
               <%= link_to 'Create Shop', new_shop_path, class: 'nav-link' %>
             </li>
           <% end %>
+          <% else %>
+          <li class="nav-item">
+              <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>
+            </li>
         <% end %>
       </ul>
     </div>
