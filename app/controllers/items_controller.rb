@@ -4,6 +4,34 @@ class ItemsController < ApplicationController
   before_action :user_has_shop?, only: %i[new create]
   before_action :user_is_owner?, only: %i[edit update destroy]
   # GET /items or /items.json
+
+  def favorite
+    type = params[:type]
+    id = params[:id]
+    @item = Item.find(id)
+    case type
+    when 'favorite'
+      if !current_user.item_favorites.include?(@item)
+        current_user.item_favorites << @item
+        render json: { message: 'Item added to favorites' }
+      else
+        render json: { message: 'Item already in favorites' }
+      end
+      current_user.item_favorites << @item
+
+    when 'unfavorite'
+      if current_user.item_favorites.include?(@item)
+        current_user.item_favorites.delete(@item)
+        render json: { message: 'Item unfavorited' }
+      else
+        ender json: { message: 'Item was already unfavorited' }
+      end
+
+    else
+      # type code here
+    end
+  end
+
   def index
     @items = Item.all
   end

@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   resources :shops do
     put :favorite, on: :member
   end
+  resources :items do
+    put :favorite, on: :member
+  end
 end
