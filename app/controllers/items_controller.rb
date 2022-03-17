@@ -17,7 +17,6 @@ class ItemsController < ApplicationController
       else
         render json: { message: 'Item already in favorites' }
       end
-      current_user.item_favorites << @item
 
     when 'unfavorite'
       if current_user.item_favorites.include?(@item)

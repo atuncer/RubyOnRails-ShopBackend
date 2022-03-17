@@ -3,3 +3,10 @@
 <td><%= item.stock %></td>
 <td><%= item.description %></td>
 <td><%= item.shop.name %></td>
+<% if current_user.present? %>
+  <% if !current_user.reload.item_favorites.include?(item) %>
+    <td><%= link_to "favorite",   add_to_favorite_item_path(item, type: "favorite"), data: { "turbo-method": :put } %></td>
+  <% else %>
+    <td><%= link_to "unfavorite", add_to_favorite_item_path(item, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+  <% end %>
+<% end %>

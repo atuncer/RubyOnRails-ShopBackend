@@ -1,0 +1,17 @@
+<%= form_with(model: favorite_item) do |form| %>
+  <% if favorite_item.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(favorite_item.errors.count, "error") %> prohibited this favorite_item from being saved:</h2>
+
+      <ul>
+        <% favorite_item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

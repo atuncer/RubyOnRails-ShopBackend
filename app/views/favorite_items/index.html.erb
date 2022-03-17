@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
 <p style="color: red"><%= alert %></p>
 
-<h1>Items</h1>
+<h1>Favorite items</h1>
 
-<div id="items">
+<div id="favorite_items">
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
@@ -19,14 +19,13 @@
     </tr>
     </thead>
     <tbody>
-    <% @items.each do |item| %>
+    <% @favorite_items.each do |fav_item| %>
       <tr>
-        <%= render item %>
+        <%= render fav_item %>
 
-        <td><%= link_to 'Show', item %></td></td>
+        <td><%= link_to 'Show', Item.where(id: fav_item.item_id).first %></td></td>
       </tr>
     <% end %>
     </tbody>
   </table>
 </div>
-

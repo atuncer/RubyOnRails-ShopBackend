@@ -1,0 +1,12 @@
+<td><%= Item.where(id: favorite_item.item_id).first.id %></td>
+<td><%= Item.where(id: favorite_item.item_id).first.name %></td>
+<td><%= Item.where(id: favorite_item.item_id).first.stock %></td>
+<td><%= Item.where(id: favorite_item.item_id).first.description %></td>
+<td><%= Item.where(id: favorite_item.item_id).first.shop.name %></td>
+<% if current_user.present? %>
+  <% if !current_user.reload.item_favorites.include?(Item.where(id: favorite_item.item_id).first) %>
+    <td><%= link_to "favorite",   add_to_favorite_item_path(Item.where(id: favorite_item.item_id).first, type: "favorite"), data: { "turbo-method": :put } %></td>
+  <% else %>
+    <td><%= link_to "unfavorite", add_to_favorite_item_path(Item.where(id: favorite_item.item_id).first, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+  <% end %>
+<% end %>

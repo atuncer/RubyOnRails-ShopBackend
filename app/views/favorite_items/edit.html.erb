@@ -1,0 +1,10 @@
+<h1>Editing favorite item</h1>
+
+<%= render "form", favorite_item: @favorite_item %>
+
+<br>
+
+<div>
+  <%= link_to "Show this favorite item", @favorite_item %> |
+  <%= link_to "Back to favorite items", favorite_items_path %>
+</div>

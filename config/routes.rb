@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :favorite_items
   resources :items
   resources :shops
   root 'pages#home'
