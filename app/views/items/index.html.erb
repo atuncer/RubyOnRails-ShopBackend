@@ -12,7 +12,9 @@
       <th scope="col">Stock</th>
       <th scope="col">Description</th>
       <th scope="col">Shop Name</th>
-      <th scope="col">Add to Favorites</th>
+      <% if current_user.present? %>
+        <th scope="col">Add to Favorites</th>
+      <% end %>
       <th scope="col">Show</th>
     </tr>
     </thead>
@@ -20,10 +22,12 @@
     <% @items.each do |item| %>
       <tr>
         <%= render item %>
-        <% if !current_user.reload.item_favorites.include?(item) %>
-          <td><%= link_to "favorite",   favorite_item_path(item, type: "favorite"), data: { "turbo-method": :put } %></td>
-        <% else %>
-          <td><%= link_to "unfavorite", favorite_item_path(item, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+          <% if current_user.present? %>
+          <% if !current_user.reload.item_favorites.include?(item) %>
+            <td><%= link_to "favorite",   add_to_favorite_item_path(item, type: "favorite"), data: { "turbo-method": :put } %></td>
+          <% else %>
+            <td><%= link_to "unfavorite", add_to_favorite_item_path(item, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+          <% end %>
         <% end %>
         <td><%= link_to 'Show', item %></td></td>
       </tr>

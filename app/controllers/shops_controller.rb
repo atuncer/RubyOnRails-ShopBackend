@@ -5,7 +5,7 @@ class ShopsController < ApplicationController
   before_action :user_is_owner?, only: %i[edit update destroy]
   # GET /shops or /shops.json
 
-  def favorite
+  def add_to_favorite
     type = params[:type]
     id = params[:id]
     @shop = Shop.find(id)
