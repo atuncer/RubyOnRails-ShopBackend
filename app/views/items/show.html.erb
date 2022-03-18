@@ -5,7 +5,7 @@
 
 <div>
   <!-- Helper method from controller-->
-  <% if can_user_edit_item(@item.id) %>
+  <% if can_user_edit_item(@item.shop_id) %>
     <%= link_to "Edit this item", edit_shop_path(@item) %>
     <%= button_to "Destroy this item", @item, method: :delete %>
   <% end %>

@@ -97,8 +97,8 @@ class ItemsController < ApplicationController
   end
 
   helper_method :can_user_edit_item
-  def can_user_edit_item(item_id)
-    current_user.present? && current_user.shop.present? && current_user.shop.id == item_id
+  def can_user_edit_item(item_shop_id)
+    current_user.present? && current_user.shop.present? && current_user.shop.id == item_shop_id
 
   end
 
