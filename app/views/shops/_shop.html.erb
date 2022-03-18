@@ -1,3 +1,10 @@
 <td><%= shop.id %></td>
 <td><%= shop.name %></td>
 <td><%= shop.bio %></td>
+<% if current_user.present? %>
+  <% if !current_user.reload.shop_favorites.include?(shop) %>
+    <td><%= link_to "favorite",   add_to_favorite_shop_path(shop, type: "favorite"), data: { "turbo-method": :put } %></td>
+  <% else %>
+    <td><%= link_to "unfavorite", add_to_favorite_shop_path(shop, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+  <% end %>
+<% end %>
