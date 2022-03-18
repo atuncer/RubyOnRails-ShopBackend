@@ -1,5 +1,5 @@
 class FavoriteItemsController < ApplicationController
-  before_action :authenticate_user!, only: %i[index show]
+  before_action :authenticate_user!, only: %i[index]
 
   # GET /favorite_items or /favorite_items.json
   def index

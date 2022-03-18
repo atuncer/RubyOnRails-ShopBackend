@@ -14,10 +14,10 @@
         </li>
         <% if current_user.present? %>
           <li class="nav-item">
-            <%= link_to 'Favorites Shops TODO', shops_path, class: 'nav-link' %>
+            <%= link_to 'Favorites Shops', favorite_shops_path, class: 'nav-link' %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Favorite Items TODO', favorite_items_path, class: 'nav-link' %>
+            <%= link_to 'Favorite Items', favorite_items_path, class: 'nav-link' %>
           </li>
           <% if current_user.shop.present? %>
             <li class="nav-item">

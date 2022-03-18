@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Favorite shops</h1>
+
+
+<div id="favorite_shops">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Biography</th>
+      <% if current_user.present? %>
+        <th scope="col">Add to Favorites</th>
+      <% end %>
+      <th scope="col">Show</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @favorite_shops.each do |fav_shop| %>
+      <tr>
+        <%= render fav_shop %>
+
+        <td><%= link_to 'Show', Shop.where(id: fav_shop.shop_id).first %></td></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

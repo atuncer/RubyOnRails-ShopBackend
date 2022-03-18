@@ -1,0 +1,10 @@
+<td><%= Shop.where(id: favorite_shop.shop_id).first.id %></td>
+<td><%= Shop.where(id: favorite_shop.shop_id).first.name %></td>
+<td><%= Shop.where(id: favorite_shop.shop_id).first.bio %></td>
+<% if current_user.present? %>
+  <% if !current_user.reload.shop_favorites.include?(Shop.where(id: favorite_shop.shop_id).first) %>
+    <td><%= link_to "favorite",   add_to_favorite_shop_path(Shop.where(id: favorite_shop.shop_id).first, type: "favorite"), data: { "turbo-method": :put } %></td>
+  <% else %>
+    <td><%= link_to "unfavorite", add_to_favorite_shop_path(Shop.where(id: favorite_shop.shop_id).first, type: "unfavorite"), data: { "turbo-method": :put } %></td>
+  <% end %>
+<% end %>
