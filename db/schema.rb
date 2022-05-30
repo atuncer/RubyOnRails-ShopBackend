@@ -11,9 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_05_25_181741) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "favorite_items", force: :cascade do |t|
     t.integer "item_id"
     t.integer "user_id"
@@ -34,12 +31,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_181741) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "shop_id", null: false
+    t.integer "shop_id", null: false
     t.index ["shop_id"], name: "index_items_on_shop_id"
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.bigint "item_id", null: false
+    t.integer "item_id", null: false
     t.string "comment"
     t.float "star"
     t.datetime "created_at", null: false
@@ -52,7 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_181741) do
     t.string "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.index ["user_id"], name: "index_shops_on_user_id", unique: true
   end
 
