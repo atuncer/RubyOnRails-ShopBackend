@@ -1,15 +1,21 @@
-<td><%= item.id %></td>
-<td><%= item.name %></td>
-<td><%= item.stock %></td>
-<td><%= item.description %></td>
-<td><%= item.shop.name %></td>
+<div class="card m-5" style="max-width: 20vw;">
+  <img src="ege.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title"><%= link_to item.name, item %></h5>
+    <p class="card-text"><%= item.description %></p>
+    <h4 class="card-text"><%= item.shop.name %></h4>
+    <p class="card-text"><%= !get_review(item.id).empty? ? get_review(item.id).average(:star) + "/5" : "No reviews" %></p>
+    <p class="card-text"><%= item.description %></p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
 <td>
   <% get_review(item.id).each do |review| %>
     <%= review.comment %>
   <% end %>
 </td>
 <td>
-  <%= !get_review(item.id).empty? ? get_review(item.id).average(:star) : "No reviews" %>
+
 </td>
 <% if current_user.present? %>
   <% if !current_user.reload.item_favorites.include?(item) %>

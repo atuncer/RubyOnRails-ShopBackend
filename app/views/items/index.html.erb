@@ -2,33 +2,9 @@
 <p style="color: red"><%= alert %></p>
 
 <h1>Items</h1>
+<div class="card-group">
+<% @items.each do |item| %>
+    <%= render item %>
 
-<div id="items">
-  <table class="table table-striped">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Description</th>
-      <th scope="col">Shop Name</th>
-      <th scope="col">Comments</th>
-      <th scope="col">Star</th>
-      <% if current_user.present? %>
-        <th scope="col">Add to Favorites</th>
-      <% end %>
-      <th scope="col">Show</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @items.each do |item| %>
-      <tr>
-        <%= render item %>
-
-        <td><%= link_to 'Show', item %></td></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+<% end %>
 </div>
-
