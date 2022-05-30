@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
         current_user.item_favorites.delete(@item)
         render json: { message: 'Item unfavorited' }
       else
-        ender json: { message: 'Item was already unfavorited' }
+        render json: { message: 'Item was already unfavorited' }
       end
 
     else
@@ -101,6 +101,16 @@ class ItemsController < ApplicationController
     current_user.present? && current_user.shop.present? && current_user.shop.id == item_shop_id
 
   end
+
+  helper_method :get_review
+  def get_review(item_id)
+    @review = Review.all.where(item_id:item_id)
+    if @review.present?
+      @review
+    end
+    []
+  end
+
 
 
   private

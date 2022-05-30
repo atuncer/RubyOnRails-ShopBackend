@@ -3,6 +3,14 @@
 <td><%= item.stock %></td>
 <td><%= item.description %></td>
 <td><%= item.shop.name %></td>
+<td>
+  <% get_review(item.id).each do |review| %>
+    <%= review.comment %>
+  <% end %>
+</td>
+<td>
+  <%= !get_review(item.id).empty? ? get_review(item.id).average(:star) : "No reviews" %>
+</td>
 <% if current_user.present? %>
   <% if !current_user.reload.item_favorites.include?(item) %>
     <td><%= link_to "favorite",   add_to_favorite_item_path(item, type: "favorite"), data: { "turbo-method": :put } %></td>

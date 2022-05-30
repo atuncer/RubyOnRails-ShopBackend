@@ -10,6 +10,8 @@
       <th scope="col">Stock</th>
       <th scope="col">Description</th>
       <th scope="col">Shop Name</th>
+      <th scope="col">Comments</th>
+      <th scope="col">Rating</th>
       <% if current_user.present? %>
         <th scope="col">Add to Favorites</th>
       <% end %>
@@ -22,7 +24,6 @@
     <tbody>
       <tr>
         <%= render @item %>
-
         <% if can_user_edit_item(@item.shop_id) %>
           <td><%= link_to "Edit this item", edit_item_path(@item) %></td>
           <td><%= button_to "Destroy this item", @item, method: :delete %></td>
