@@ -107,8 +107,9 @@ class ItemsController < ApplicationController
     @review = Review.all.where(item_id:item_id)
     if @review.present?
       @review
+    else
+      []
     end
-    []
   end
 
 

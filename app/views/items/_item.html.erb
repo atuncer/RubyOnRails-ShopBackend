@@ -4,19 +4,11 @@
     <h5 class="card-title"><%= link_to item.name, item %></h5>
     <p class="card-text"><%= item.description %></p>
     <h4 class="card-text"><%= item.shop.name %></h4>
-    <p class="card-text"><%= !get_review(item.id).empty? ? get_review(item.id).average(:star) + "/5" : "No reviews" %></p>
+    <p class="card-text"><%= !get_review(item.id).empty? ? get_review(item.id).average(:star) : "No reviews" %></p>
     <p class="card-text"><%= item.description %></p>
     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
   </div>
 </div>
-<td>
-  <% get_review(item.id).each do |review| %>
-    <%= review.comment %>
-  <% end %>
-</td>
-<td>
-
-</td>
 <% if current_user.present? %>
   <% if !current_user.reload.item_favorites.include?(item) %>
     <td><%= link_to "favorite",   add_to_favorite_item_path(item, type: "favorite"), data: { "turbo-method": :put } %></td>
