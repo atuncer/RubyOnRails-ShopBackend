@@ -1,14 +1,12 @@
 <p style="color: green"><%= notice %></p>
 <p style="color: red"><%= alert %></p>
 
-
+<div class="container">
 <%= render @shop %>
-
-<div>
   <% if current_user and current_user.id == @shop.user_id%>
-    <%= link_to "Edit this shop", edit_shop_path(@shop) %>
-    <%= button_to "Destroy this shop", @shop, method: :delete %>
+    <%= link_to "Edit this shop", edit_shop_path(@shop), :class=>"btn btn-primary btn-lg" %>
+    <%= button_to "Destroy this shop", @shop, method: :delete, :class=>"btn btn-danger btn-lg" %>
   <% end %>
-  <%= link_to "Back to shops", shops_path %>
-
+  <%= link_to "Back to shops", shops_path, :class=>"btn btn-secondary btn-lg" %>
 </div>
+

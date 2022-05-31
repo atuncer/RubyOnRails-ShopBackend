@@ -1,36 +1,17 @@
 <p style="color: green"><%= notice %></p>
 <p style="color: red"><%= alert %></p>
 
-<div id="items">
-  <table class="table table-striped">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Description</th>
-      <th scope="col">Shop Name</th>
-      <th scope="col">Comments</th>
-      <th scope="col">Rating</th>
-      <% if current_user.present? %>
-        <th scope="col">Add to Favorites</th>
-      <% end %>
-      <% if can_user_edit_item(@item.shop_id) %>
-        <th scope="col">Edit</th>
-        <th scope="col">Destroy</th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-      <tr>
+<div class="container">
         <%= render @item %>
         <% if can_user_edit_item(@item.shop_id) %>
-          <td><%= link_to "Edit this item", edit_item_path(@item) %></td>
-          <td><%= button_to "Destroy this item", @item, method: :delete %></td>
+          <%= link_to "Edit this item", edit_item_path(@item), :class=>"btn btn-primary btn-lg" %>
+          <%= button_to "Destroy this item", @item, method: :delete, :class=>"btn btn-danger btn-lg" %>
         <% end %>
-      </tr>
-    </tbody>
-  </table>
+  <h2>Comments</h2>
+  <% unless get_review(@item.id).empty? %>
+  <%  get_review(@item.id).each do |review|  %>
+    <%=  review.comment  %>
+    <%=  review.user  %>
+  <%  end  %>
+  <%  end %>
 </div>
-
-

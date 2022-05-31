@@ -2,29 +2,9 @@
 <p style="color: red"><%= alert %></p>
 
 <h1>Shops</h1>
-
-<div id="shops">
-
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Biography</th>
-          <% if current_user.present? %>
-            <th scope="col">Add to Favorites</th>
-          <% end %>
-          <th scope="col">Show</th>
-        </tr>
-      </thead>
-      <tbody>
+<div class="card-group">
       <% @shops.each do |shop| %>
-      <tr>
         <%= render shop %>
-        <td><%= link_to 'Show', shop %></td></td>
-      </tr>
       <% end %>
-      </tbody>
-    </table>
 </div>
 
