@@ -1,10 +1,10 @@
 <p style="color: green"><%= notice %></p>
 <p style="color: red"><%= alert %></p>
 
-<h1>Items</h1>
+<h1 class="text-center">Items</h1>
 <div class="card-group">
-<% @items.each do |item| %>
+  <% @items.each do |item| %>
     <%= render item %>
 
-<% end %>
+  <% end %>
 </div>
