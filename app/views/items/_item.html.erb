@@ -1,8 +1,10 @@
 <% if item.shop.isVisible %>
 <div class="card m-5" style="max-width: 20vw;min-width: 15vw">
-  <img src="ege.jpg" class="card-img-top" alt="..."><%= link_to item.name, item %>
+<%=link_to item do %>
+    <img src="ege.jpg" class="card-img-top" alt="...">
+    <%end %>
   <div class="card-body">
-    <h5 class="card-title text-uppercase text-decoration-none"><%= link_to item.name, item %></h5>
+    <h5 class="card-title text-uppercase text-decoration-none"><%=item.name%></h5>
     <p class="card-text text-capitalize"><%= item.description %></p>
     <h4 class="card-text"><%= item.shop.name %></h4>
     <p class="card-text"><%= !get_review(item.id).empty? ? get_review(item.id).average(:star) : "No reviews" %></p>

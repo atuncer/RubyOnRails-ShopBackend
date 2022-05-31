@@ -1,10 +1,17 @@
-<td><%= Shop.where(id: favorite_shop.shop_id).first.id %></td>
-<td><%= Shop.where(id: favorite_shop.shop_id).first.name %></td>
-<td><%= Shop.where(id: favorite_shop.shop_id).first.bio %></td>
-<% if current_user.present? %>
-  <% if !current_user.reload.shop_favorites.include?(Shop.where(id: favorite_shop.shop_id).first) %>
-    <td><%= link_to "favorite",   add_to_favorite_shop_path(Shop.where(id: favorite_shop.shop_id).first, type: "favorite"), data: { "turbo-method": :put } %></td>
-  <% else %>
-    <td><%= link_to "unfavorite", add_to_favorite_shop_path(Shop.where(id: favorite_shop.shop_id).first, type: "unfavorite"), data: { "turbo-method": :put } %></td>
-  <% end %>
-<% end %>
+<% @shop = Shop.where(id: favorite_shop.shop_id).first %>
+
+<div class="card m-5" style="max-width: 20vw; min-width: 15vw">
+  <img src="ege.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h4 class="card-text"><%= @shop.name %></h4>
+    <p class="card-text"><%= @shop.bio %></p>
+    <% if current_user.present? %>
+      <% if !current_user.reload.shop_favorites.include?(@shop) %>
+        <p class="card-text"><small class="text-muted"><%= link_to "Add to Favorite",   add_to_favorite_shop_path(@shop, type: "favorite"), data: { "turbo-method": :put } %></small></p>
+      <% else %>
+        <p class="card-text"><small class="text-muted"><%= link_to "unfavorite", add_to_favorite_shop_path(@shop, type: "unfavorite"), data: { "turbo-method": :put } %></small></p>
+      <% end %>
+    <% end %>
+    <p class="card-text"><small class="text-muted"><%= link_to 'Show', @shop %></small></p>
+  </div>
+</div>
