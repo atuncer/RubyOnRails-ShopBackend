@@ -11,7 +11,8 @@
   <% unless get_review(@item.id).empty? %>
   <%  get_review(@item.id).each do |review|  %>
     <%=  review.comment  %>
-    <%=  review.user  %>
+      </br>
+    <%=  User.find(review.user_id).email  %>
   <%  end  %>
   <%  end %>
 </div>
