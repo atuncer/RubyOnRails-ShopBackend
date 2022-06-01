@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CRUDMarketplace</title>
+    <title>Pickles</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,12 +11,15 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
+  <body style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg'); height: 100vh">
   <%= render "layouts/header" %>
-  <div class="container">
-    <br/>
-    <%= yield %>
-  </div>
-  </body>
+
+    <div class="container">
+      <br/>
+      <%= yield %>
+    </div>
+
   <%= render "layouts/footer" %>
+  </body>
+
 </html>

@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <%= link_to 'CRUD Marketplace', root_path, class: 'navbar-brand' %>
+    <%=link_to root_path, class: 'navbar-brand' do %>
+      <img src="pickleshome.png" class="card-img-top" alt="..." style="min-width: 5vw; max-height: 3vw">
+    <%end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
