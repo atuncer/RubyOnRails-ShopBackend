@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
+<% if current_user&.isAdmin %>
+<h1 class="text-center">Approval Waiting Shops</h1>
+<div class="container">
+  <% get_waiting_approval.each do |appr| %>
+    <div class="card m-5" style="max-width: 20vw; min-width: 15vw">
+      <img src="ege.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h4 class="card-text"><%= appr.name %></h4>
+        <p class="card-text"><%= appr.bio %></p>
+        <p class="card-text"><small class="text-muted"><%= link_to 'Show', appr %></small></p>
+        <%= link_to "Approve", set_approve_shop_path(appr), data: { "turbo-method": :put } %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<% end %>

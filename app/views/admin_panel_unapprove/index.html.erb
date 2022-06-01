@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
+<% if current_user&.isAdmin %>
+  <h1 class="text-center">Live Shops</h1>
+  <div class="card-group">
+    <% get_is_live.each do |appr| %>
+      <div class="card m-5" style="max-width: 20vw; min-width: 15vw">
+        <img src="ege.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h4 class="card-text"><%= appr.name %></h4>
+          <p class="card-text"><%= appr.bio %></p>
+          <p class="card-text"><small class="text-muted"><%= link_to 'Show', appr %></small></p>
+          <%= link_to "Suspend", set_suspend_shop_path(appr), data: { "turbo-method": :put } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

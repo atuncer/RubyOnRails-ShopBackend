@@ -5,6 +5,27 @@ class ShopsController < ApplicationController
   before_action :user_is_owner?, only: %i[edit update destroy]
   # GET /shops or /shops.json
 
+  def set_approve
+    id = params[:id]
+    @shop = Shop.find(id)
+    @shop.isWaitingApproval = 0
+    @shop.save
+  end
+
+  def set_suspend
+    id = params[:id]
+    @shop = Shop.find(id)
+    @shop.isLive = 0
+    @shop.save
+  end
+
+  def set_unsuspend
+    id = params[:id]
+    @shop = Shop.find(id)
+    @shop.isLive = 1
+    @shop.save
+  end
+
   def add_to_favorite
     type = params[:type]
     id = params[:id]
@@ -57,6 +78,8 @@ class ShopsController < ApplicationController
     @shop = Shop.new(permitted_shop_params)
     @shop.user_id = current_user.id # by passing current_user.id here, it prevents the user from changing the user_id
     #                                 by editing the network packets
+    @shop.isLive = true
+    @shop.isWaitingApproval = true
 
     respond_to do |format|
       if @shop.save
@@ -113,6 +136,10 @@ class ShopsController < ApplicationController
       return true
     end
     false
+  end
+
+  def user_is_admin
+    current_user.isAdmin
   end
 
   def user_is_owner?

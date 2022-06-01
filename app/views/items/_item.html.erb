@@ -1,8 +1,8 @@
-<% if item.shop.isVisible %>
-<div class="card m-5" style="max-width: 15vw;min-width: 15vw">
-<%=link_to item do %>
-    <img src="ege.jpg" class="card-img-top" alt="...">
-    <%end %>
+<% if item.shop.isLive && !item.shop.isWaitingApproval %>
+    <div class="card m-5" style="max-width: 15vw;min-width: 15vw">
+      <%=link_to item do %>
+        <img src="ege.jpg" class="card-img-top" alt="...">
+      <%end %>
   <div class="card-body">
     <h5 class="card-title text-uppercase text-decoration-none"><%=item.name%></h5>
     <p class="card-text text-capitalize"><%= item.description %></p>
